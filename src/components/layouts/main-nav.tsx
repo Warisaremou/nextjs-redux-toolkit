@@ -24,7 +24,7 @@ export function MainNav({ items }: MainNavProps) {
     return (
         <div className="hidden lg:flex gap-x-6 md:gap-44">
             <Link aria-label="Home" href="/" className="items-center md:space-x-2 hidden lg:flex">
-                <span className="font-bold inline-block text-xl text-green-600">{siteConfig.name}</span>
+                <div className="font-bold inline-block text-xl text-gray-700"> <span className="text-blue-700">S</span>hop.</div>
             </Link>
             <NavigationMenu className="hidden lg:flex">
                 <NavigationMenuList>
@@ -40,7 +40,7 @@ export function MainNav({ items }: MainNavProps) {
                                                 className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                                                 href="/"
                                             >
-                                                <div className="mb-2 mt-4 text-lg text-green-500 font-bold">{siteConfig.name}</div>
+                                                <div className="mb-2 mt-4 text-lg text-blue-800 font-bold">{siteConfig.name}</div>
                                                 <p className="text-sm leading-tight text-muted-foreground">{siteConfig.description}</p>
                                             </a>
                                         </NavigationMenuLink>

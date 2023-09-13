@@ -1,6 +1,10 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
-import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import TanStackQueryProvider from "@/components/query-client-provider";
+import { ProductIdContextProvider } from "@/context/product-id-provider";
 
 const urbanist = Urbanist({
     subsets: ["latin"],
@@ -15,7 +19,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <head />
-            <body className={urbanist.className}>{children}</body>
+            <body className={urbanist.className}>
+                <TanStackQueryProvider>
+                    <ProductIdContextProvider>
+                        {children}
+                        <Toaster />
+                    </ProductIdContextProvider>
+                </TanStackQueryProvider>
+            </body>
         </html>
     );
 }
