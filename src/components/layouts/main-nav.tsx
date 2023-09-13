@@ -24,7 +24,7 @@ export function MainNav({ items }: MainNavProps) {
     return (
         <div className="hidden lg:flex gap-x-6 md:gap-44">
             <Link aria-label="Home" href="/" className="items-center md:space-x-2 hidden lg:flex">
-                <div className="font-bold inline-block text-xl text-gray-700"> <span className="text-blue-700">S</span>hop.</div>
+                <div className="font-bold inline-block text-xl text-gray-800"> <span className="text-blue-700">S</span>hop.</div>
             </Link>
             <NavigationMenu className="hidden lg:flex">
                 <NavigationMenuList>

@@ -19,7 +19,7 @@ import { formatPrice } from "@/utils";
 // import { getCartAction } from "@/app/_actions/cart";
 
 export function CartSheet() {
-    const cart = useSelector((state: RootState) => state.cart);
+    const cart = useSelector((state: RootState) => state.cart.cart);
 
     const dispatch = useDispatch();
 
@@ -205,7 +205,7 @@ export function CartSheet() {
                                 <Button
                                     aria-label="Clear cart"
                                     size="sm"
-                                    className="w-full"
+                                    className="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold"
                                     onClick={() => {
                                         dispatch(clearCart());
                                     }}

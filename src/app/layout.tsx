@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import TanStackQueryProvider from "@/components/query-client-provider";
 import { ProductIdContextProvider } from "@/context/product-id-provider";
 import StoreProvider from "@/store/store-provider";
+import PersistStoreProvider from "@/store/persist-store-provider";
 
 const urbanist = Urbanist({
     subsets: ["latin"],
@@ -22,12 +23,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head />
             <body className={urbanist.className}>
                 <StoreProvider>
-                    <TanStackQueryProvider>
-                        <ProductIdContextProvider>
-                            {children}
-                            <Toaster />
-                        </ProductIdContextProvider>
-                    </TanStackQueryProvider>
+                    <PersistStoreProvider>
+                        <TanStackQueryProvider>
+                            <ProductIdContextProvider>
+                                {children}
+                                <Toaster />
+                            </ProductIdContextProvider>
+                        </TanStackQueryProvider>
+                    </PersistStoreProvider>
                 </StoreProvider>
             </body>
         </html>

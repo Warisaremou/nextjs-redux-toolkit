@@ -28,16 +28,14 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         isError && router.push("/products");
         isError && console.log("Something went wrong !");
     }, [productId]);
-
-    console.log(productId);
-
+    // console.log(productId);
     // isSuccess && console.log(data?.data?.product);
 
     return (
         <div>
-            <Link href="/products" className="flex items-center space-x-1 pb-2">
+            <Link href="/products" className="flex items-center space-x-1 pb-5">
                 <ChevronLeft className="h-4 w-4 text-gray-600" />
-                <span className="text-lg font-medium text-gray-600">Back to store</span>
+                <span className=" font-medium text-gray-600">Back to store</span>
             </Link>
 
             {isLoading && (

@@ -1,45 +1,34 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useProductIdProvider } from "@/context/product-id-provider";
+import { addToCart } from "@/features/cart/cart-slice";
 import { formatPrice } from "@/utils";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import type { RootState } from "../../store/store";
-import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "@/features/cart/cart-slice";
-import { ProductType } from "@/types";
+import { useDispatch } from "react-redux";
 
 interface ProductsCardProps {
     product?: any;
 }
 
 export default function ProductsCard({ product }: ProductsCardProps) {
-    const { setProductId, productId } = useProductIdProvider();
+    const { setProductId } = useProductIdProvider();
     const [isPending, startTransition] = React.useTransition();
     const { toast } = useToast();
     const router = useRouter();
     const dispatch = useDispatch();
 
-    // const [productDetails, setProductDetails] = React.useState<ProductType>({} as ProductType);
-
     const productTitle: string = product?.node?.title;
-
-    // console.log(productDetails);
-
     // console.log(product?.node);
-
     const handleProductId = async (id: string) => {
         await setProductId(id);
         router.push(`/products/${productTitle.toLocaleLowerCase().replace(" ", "-")}`);
     };
-
-    // React.useEffect(() => {
-    //     console.log(productDetails);
-    // }, [productDetails]);
 
     return (
         <div className="border rounded-2xl">
@@ -68,31 +57,23 @@ export default function ProductsCard({ product }: ProductsCardProps) {
                     disabled={isPending}
                     onClick={() => {
                         startTransition(async () => {
-                            // dispatch(addToCart(product?.node?.variants?.edges[0]?.node?.id))
-                            // await setProductDetails({
-                            //     id: product?.node?.id,
-                            //     name: product?.node?.title,
-                            //     price: product?.node?.variants?.edges[0]?.node?.price?.amount,
-                            //     image: product?.node?.featuredImage?.url,
-                            // });
                             try {
                                 await dispatch(addToCart(product?.node));
                                 toast({
                                     title: "Added to cart successfully !",
+                                    action: (
+                                        <ToastAction
+                                            className="bg-blue-800 text-white hover:bg-blue-900 hover:text-white rounded-md"
+                                            altText="View Cart"
+                                            onClick={() => router.push("/cart")}
+                                        >
+                                            View cart
+                                        </ToastAction>
+                                    ),
                                 });
                             } catch (error) {
                                 console.log(error);
                             }
-                            // console.log(productDetails);
-                            // await dispatch(addToCart(product?.node))
-                            // if (productDetails.id) {
-                            //     await dispatch(addToCart(productDetails));
-                            //     toast({
-                            //         title: "Added to cart successfully !",
-                            //     });
-                            // } else {
-                            //     console.log("Something went wrong !");
-                            // }
                         });
                     }}
                 >

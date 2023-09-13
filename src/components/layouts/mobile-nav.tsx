@@ -36,7 +36,7 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
                     <Link aria-label="Home" href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
                         <div className="font-bold inline-block text-xl text-gray-700">
                             {" "}
-                            <span className="text-blue-700">S</span>hop.
+                            <span className="text-blue-800">S</span>hop.
                         </div>
                     </Link>
                 </div>
