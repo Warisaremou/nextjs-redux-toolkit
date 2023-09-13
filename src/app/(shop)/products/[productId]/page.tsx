@@ -9,7 +9,7 @@ import { formatPrice } from "@/utils";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import React from "react";
 
 interface ProductDetailPageProps {
@@ -20,14 +20,13 @@ interface ProductDetailPageProps {
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     const { productId } = useProductIdProvider();
-    const { data, isLoading, isError, isSuccess } = useProduct(productId);
-    const router = useRouter();
+    const { data, isLoading, isSuccess } = useProduct(productId);
+    // const router = useRouter();
 
-    React.useEffect(() => {
-        // console.log(productId);
-        isError && router.push("/products");
-        isError && console.log("Something went wrong !");
-    }, [productId]);
+    // React.useEffect(() => {
+    //     isError && router.push("/products");
+    //     isError && console.log("Something went wrong !");
+    // }, []);
     // console.log(productId);
     // isSuccess && console.log(data?.data?.product);
 
