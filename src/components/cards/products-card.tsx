@@ -6,9 +6,12 @@ import { useProductIdProvider } from "@/context/product-id-provider";
 import { formatPrice } from "@/utils";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import type { RootState } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "@/features/cart/cart-slice";
+import { ProductType } from "@/types";
 
 interface ProductsCardProps {
     product?: any;
@@ -19,16 +22,24 @@ export default function ProductsCard({ product }: ProductsCardProps) {
     const [isPending, startTransition] = React.useTransition();
     const { toast } = useToast();
     const router = useRouter();
-    // console.log(product?.node?.id);
+    const dispatch = useDispatch();
+
+    // const [productDetails, setProductDetails] = React.useState<ProductType>({} as ProductType);
 
     const productTitle: string = product?.node?.title;
 
+    // console.log(productDetails);
+
+    // console.log(product?.node);
+
     const handleProductId = async (id: string) => {
         await setProductId(id);
-        // console.log(productId)
-        // console.log(id);
         router.push(`/products/${productTitle.toLocaleLowerCase().replace(" ", "-")}`);
     };
+
+    // React.useEffect(() => {
+    //     console.log(productDetails);
+    // }, [productDetails]);
 
     return (
         <div className="border rounded-2xl">
@@ -36,7 +47,7 @@ export default function ProductsCard({ product }: ProductsCardProps) {
                 <div onClick={() => handleProductId(product?.node?.id)} className="cursor-pointer">
                     <Image
                         src={product?.node?.featuredImage?.url}
-                        alt="Nike Shoe"
+                        alt={`${product?.node?.title}-image`}
                         width={300}
                         height={300}
                         priority
@@ -56,10 +67,32 @@ export default function ProductsCard({ product }: ProductsCardProps) {
                     className="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold"
                     disabled={isPending}
                     onClick={() => {
-                        startTransition(() => {
-                            toast({
-                                title: "Added to cart successfully !",
-                            });
+                        startTransition(async () => {
+                            // dispatch(addToCart(product?.node?.variants?.edges[0]?.node?.id))
+                            // await setProductDetails({
+                            //     id: product?.node?.id,
+                            //     name: product?.node?.title,
+                            //     price: product?.node?.variants?.edges[0]?.node?.price?.amount,
+                            //     image: product?.node?.featuredImage?.url,
+                            // });
+                            try {
+                                await dispatch(addToCart(product?.node));
+                                toast({
+                                    title: "Added to cart successfully !",
+                                });
+                            } catch (error) {
+                                console.log(error);
+                            }
+                            // console.log(productDetails);
+                            // await dispatch(addToCart(product?.node))
+                            // if (productDetails.id) {
+                            //     await dispatch(addToCart(productDetails));
+                            //     toast({
+                            //         title: "Added to cart successfully !",
+                            //     });
+                            // } else {
+                            //     console.log("Something went wrong !");
+                            // }
                         });
                     }}
                 >

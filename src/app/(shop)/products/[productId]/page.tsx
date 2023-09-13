@@ -42,7 +42,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
             {isLoading && (
                 <div className="grid md:grid-cols-2 py-5 md:gap-x-5 lg:gap-x-10 xl:gap-x-16">
-                    <Skeleton className="overflow-hidden w-full h-72 md:h-full bg-gray-100 flex justify-center items-center">
+                    <Skeleton className="overflow-hidden w-full h-72 md:h-80 bg-gray-100 flex justify-center items-center">
                         <Icons.placeholder className="h-16 w-16 text-gray-400" aria-hidden="true" />
                     </Skeleton>
                     <div className="pt-8 md:pt-0 space-y-5">
@@ -65,7 +65,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     <div className="overflow-hidden w-full h-fit bg-gray-100 rounded-2xl">
                         <Image
                             src={data?.data?.product?.featuredImage?.url}
-                            alt="Nike Shoe"
+                            alt={`${data?.data?.product?.title}-image`}
                             width={400}
                             height={400}
                             priority

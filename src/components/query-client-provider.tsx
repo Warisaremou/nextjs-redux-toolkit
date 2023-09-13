@@ -16,7 +16,7 @@ export default function TanStackQueryProvider({ children }: { children?: React.R
     return (
         <QueryClientProvider client={queryClient}>
             {children}
-            <ReactQueryDevtools />
+            {/* <ReactQueryDevtools /> */}
         </QueryClientProvider>
     );
 }
