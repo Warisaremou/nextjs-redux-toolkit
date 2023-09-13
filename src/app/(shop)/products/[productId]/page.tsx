@@ -1,16 +1,16 @@
 "use client";
 
 import AddToCart from "@/components/add-to-cart";
-import { formatPrice } from "@/utils";
-import Image from "next/image";
-import React from "react";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
-import { useProduct } from "@/services/hooks/use-product";
-import { useProductIdProvider } from "@/context/product-id-provider";
-import { useRouter } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Icons } from "@/components/icons";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useProductIdProvider } from "@/context/product-id-provider";
+import { useProduct } from "@/services/hooks/use-product";
+import { formatPrice } from "@/utils";
+import { ChevronLeft } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 interface ProductDetailPageProps {
     params: {
@@ -84,7 +84,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                             <h2 className="text-lg md:text-2xl font-bold">Description</h2>
                             <p className="text-justify">{data?.data?.product?.description}</p>
                         </div>
-                        <AddToCart productId={params.productId} />
+                        <AddToCart product={data?.data?.product} />
                     </div>
                 </div>
             )}

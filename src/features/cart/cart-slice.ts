@@ -1,3 +1,4 @@
+// import { Product } from "./cart-slice";
 import { ProductType } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
@@ -21,12 +22,16 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart: (state, action: PayloadAction<ProductType>) => {
-            const existingProduct = state.cart.find((product) => product.productDetails.id === action.payload.id);
+        // For add to cart reducer add optional payload for quantity if quantity is not pass use 1 as default else use payload quantity
+        addToCart: (state, action: PayloadAction<{ product: ProductType; quantity?: number }>) => {
+            const { product, quantity } = action.payload;
+            const existingProduct = state.cart.find((item) => item.productDetails.id === product.id);
             if (existingProduct) {
-                existingProduct.quantity++;
+                if (quantity) existingProduct.quantity += quantity;
+                else existingProduct.quantity++;
             } else {
-                state.cart.push({ productDetails: action.payload, quantity: 1 });
+                if (quantity) state.cart.push({ productDetails: product, quantity });
+                else state.cart.push({ productDetails: product, quantity: 1 });
             }
         },
         removeFromCart: (state, action: PayloadAction<ProductType>) => {

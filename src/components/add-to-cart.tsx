@@ -4,28 +4,22 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { useToast } from "./ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import { useRouter } from "next/navigation";
+import { addToCart } from "@/features/cart/cart-slice";
+import { useDispatch } from "react-redux";
+import { ProductType } from "@/types";
 
 type AddToCartProps = {
-    productId?: any;
+    product: ProductType;
 };
 
-export default function AddToCart({ productId }: AddToCartProps) {
+export default function AddToCart({ product }: AddToCartProps) {
     const [quantity, setQuantity] = useState<number>(1);
-    const [isPending, setIsPending] = useState<boolean>(false);
     const { toast } = useToast();
-
-    // console.log(product);
-
-    const addToCart = (productId: string, quantity: number) => {
-        setIsPending(true);
-        setTimeout(() => {
-            console.log(productId, quantity);
-            toast({
-                title: "Added to cart successfully !",
-            });
-            setIsPending(false);
-        }, 2000);
-    };
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const [isPending, startTransition] = React.useTransition();
 
     return (
         <div className="flex flex-col md:flex-row gap-x-16 gap-y-5 mt-5">
@@ -54,7 +48,27 @@ export default function AddToCart({ productId }: AddToCartProps) {
                 aria-label="Add to cart"
                 className="p-7 rounded-md w-full md:w-2/4 bg-blue-800 hover:bg-blue-900 text-white font-semibold"
                 disabled={isPending}
-                onClick={() => addToCart(productId, quantity)}
+                onClick={() => {
+                    startTransition(async () => {
+                        try {
+                            await dispatch(addToCart({product, quantity}));
+                            toast({
+                                title: "Added to cart successfully",
+                                action: (
+                                    <ToastAction
+                                        className="bg-blue-800 text-white hover:bg-blue-900 hover:text-white rounded-md"
+                                        altText="View Cart"
+                                        onClick={() => router.push("/cart")}
+                                    >
+                                        View cart
+                                    </ToastAction>
+                                ),
+                            });
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    });
+                }}
             >
                 {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}Add to cart
             </Button>

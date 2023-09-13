@@ -1,5 +1,4 @@
 import { SiteHeader } from "@/components/layouts/site-header";
-import React from "react";
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
     return (

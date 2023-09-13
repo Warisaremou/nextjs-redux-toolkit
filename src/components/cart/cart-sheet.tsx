@@ -1,41 +1,38 @@
 "use client";
 
-// import { formatPrice } from "@/lib/utils";
+import { Icons } from "@/components/icons";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-// import { UpdateCart } from "@/components/cart/update-cart";
-import { Icons } from "@/components/icons";
-import { Badge } from "@/components/ui/badge";
+import { formatPrice } from "@/utils";
 import Image from "next/image";
-
 // Redux packages
+import { addToCart, clearCart, clearFromCart, removeFromCart } from "@/features/cart/cart-slice";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { removeFromCart, clearCart, clearFromCart, addToCart } from "@/features/cart/cart-slice";
-import { formatPrice } from "@/utils";
-
-// import { getCartAction } from "@/app/_actions/cart";
 
 export function CartSheet() {
     const cart = useSelector((state: RootState) => state.cart.cart);
-
     const dispatch = useDispatch();
+    const router = useRouter();
+    // console.log(cart.cart);
 
-    console.log(cart.cart);
+    // Cart Total
+    const cartTotal = cart.cart.reduce((total, item) => {
+        return total + Number(item?.productDetails?.variants?.edges[0]?.node?.price?.amount) * Number(item?.quantity);
+    }, 0);
 
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button aria-label="Open cart" variant="outline" size="icon" className="relative">
-                    {/* {itemCount > 0 && (
-                        <Badge variant="secondary" className="absolute -right-2 -top-2 h-6 w-6 rounded-full p-2">
-                            {itemCount}
-                        </Badge>
-                    )} */}
                     {cart.cart.length > 0 && (
-                        <Badge className="absolute -right-2 -top-2 h-5 w-5 rounded-full pl-[6px] font-bold">{cart.cart.length}</Badge>
+                        <Badge className="absolute -right-2 -top-2 h-5 w-5 rounded-full pl-[6px] font-bold bg-blue-800">
+                            {cart.cart.length}
+                        </Badge>
                     )}
                     <Icons.cart className="h-4 w-4" aria-hidden="true" />
                 </Button>
@@ -48,87 +45,6 @@ export function CartSheet() {
                     </SheetTitle>
                 </SheetHeader>
                 <Separator />
-                {/* <div className="flex h-full flex-col items-center justify-center space-y-2">
-                    <Icons.cart className="h-12 w-12 text-muted-foreground" aria-hidden="true" />
-                    <span className="text-lg font-medium text-muted-foreground">Your Cart is empty !</span>
-                </div> */}
-                {/* {itemCount > 0 ? (
-                    <>
-                        <div className="flex flex-1 flex-col gap-5 overflow-hidden">
-                            <ScrollArea className="h-full">
-                                <div className="flex flex-col gap-5 pr-6">
-                                    {cartLineItems.map((item) => (
-                                        <div key={item.id} className="space-y-3">
-                                            <div className="flex items-center space-x-4">
-                                                <div className="relative h-16 w-16 overflow-hidden rounded">
-                                                    {item?.images?.length ? (
-                                                        <Image
-                                                            src={item.images[0]?.url ?? "/images/product-placeholder.webp"}
-                                                            alt={item.images[0]?.name ?? item.name}
-                                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                            fill
-                                                            className="absolute object-cover"
-                                                            loading="lazy"
-                                                        />
-                                                    ) : (
-                                                        <div className="flex h-full items-center justify-center bg-secondary">
-                                                            <Icons.placeholder
-                                                                className="h-4 w-4 text-muted-foreground"
-                                                                aria-hidden="true"
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div className="flex flex-1 flex-col gap-1 self-start text-sm">
-                                                    <span className="line-clamp-1">{item.name}</span>
-                                                    <span className="line-clamp-1 text-muted-foreground">
-                                                        {formatPrice(item.price)} x {item.quantity} ={" "}
-                                                        {formatPrice((Number(item.price) * Number(item.quantity)).toFixed(2))}
-                                                    </span>
-                                                    <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
-                                                        {`${item.category} ${item.subcategory ? `/ ${item.subcategory}` : ""}`}
-                                                    </span>
-                                                </div>
-                                                <UpdateCart cartLineItem={item} />
-                                            </div>
-                                            <Separator />
-                                        </div>
-                                    ))}
-                                </div>
-                            </ScrollArea>
-                        </div>
-                        <div className="grid gap-1.5 pr-6 text-sm">
-                            <Separator className="mb-2" />
-                            <div className="flex">
-                                <span className="flex-1">Subtotal</span>
-                                <span>{formatPrice(cartTotal.toFixed(2))}</span>
-                            </div>
-                            <div className="flex">
-                                <span className="flex-1">Shipping</span>
-                                <span>Free</span>
-                            </div>
-                            <div className="flex">
-                                <span className="flex-1">Taxes</span>
-                                <span>Calculated at checkout</span>
-                            </div>
-                            <Separator className="mt-2" />
-                            <div className="flex">
-                                <span className="flex-1">Total</span>
-                                <span>{formatPrice(cartTotal.toFixed(2))}</span>
-                            </div>
-                            <SheetFooter className="mt-1.5">
-                                <Button aria-label="Proceed to checkout" size="sm" className="w-full">
-                                    Proceed to Checkout
-                                </Button>
-                            </SheetFooter>
-                        </div>
-                    </>
-                ) : (
-                    <div className="flex h-full flex-col items-center justify-center space-y-2">
-                        <Icons.cart className="h-12 w-12 text-muted-foreground" aria-hidden="true" />
-                        <span className="text-lg font-medium text-muted-foreground">Votre Panier est vide !</span>
-                    </div>
-                )} */}
                 {cart.cart.length > 0 ? (
                     <>
                         <div className="flex flex-1 flex-col gap-5 overflow-hidden">
@@ -176,7 +92,7 @@ export function CartSheet() {
                                                             size="icon"
                                                             // disabled={quantity === 10 && true}
                                                             onClick={() => {
-                                                                dispatch(addToCart(item?.productDetails));
+                                                                dispatch(addToCart({ product: item?.productDetails }));
                                                             }}
                                                         >
                                                             <Icons.add className="h-5 w-5 text-gray-600" aria-hidden="true" />
@@ -201,7 +117,17 @@ export function CartSheet() {
                             </ScrollArea>
                         </div>
                         <div className=" mr-6">
-                            <SheetFooter className="mt-1.5">
+                            <Separator className="mb-2" />
+                            <div>
+                                <div className="flex py-3">
+                                    <span className="flex-1 font-medium text-blue-900">Subtotal</span>
+                                    <span className="font-medium"> {formatPrice(cartTotal)} </span>
+                                </div>
+                                <p className="text-gray-600 text-[14px] md:text-base">
+                                    Shipping and taxes will be calculated at checkout.
+                                </p>
+                            </div>
+                            <SheetFooter className="pt-8 gap-3">
                                 <Button
                                     aria-label="Clear cart"
                                     size="sm"
@@ -211,6 +137,16 @@ export function CartSheet() {
                                     }}
                                 >
                                     Clear Cart
+                                </Button>
+                                <Button
+                                    aria-label="Clear cart"
+                                    size="sm"
+                                    className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 font-semibold"
+                                    onClick={() => {
+                                        router.push("/cart");
+                                    }}
+                                >
+                                    Go to checkout
                                 </Button>
                             </SheetFooter>
                         </div>

@@ -58,9 +58,9 @@ export default function ProductsCard({ product }: ProductsCardProps) {
                     onClick={() => {
                         startTransition(async () => {
                             try {
-                                await dispatch(addToCart(product?.node));
+                                await dispatch(addToCart({product: product?.node}));
                                 toast({
-                                    title: "Added to cart successfully !",
+                                    title: "Added to cart successfully",
                                     action: (
                                         <ToastAction
                                             className="bg-blue-800 text-white hover:bg-blue-900 hover:text-white rounded-md"
