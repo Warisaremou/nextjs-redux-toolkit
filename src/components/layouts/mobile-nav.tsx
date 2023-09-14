@@ -34,8 +34,7 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
             <SheetContent side="left" className="pl-0 pr-0 lg:hidden">
                 <div className="px-7">
                     <Link aria-label="Home" href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
-                        <div className="font-bold inline-block text-xl text-gray-700">
-                            {" "}
+                        <div className="font-bold inline-block text-xl text-gray-700 dark:text-white">
                             <span className="text-blue-800">S</span>hop.
                         </div>
                     </Link>

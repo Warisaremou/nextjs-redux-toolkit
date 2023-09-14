@@ -23,7 +23,7 @@ export default function AddToCart({ product }: AddToCartProps) {
 
     return (
         <div className="flex flex-col md:flex-row gap-x-16 gap-y-5 mt-5">
-            <div className="flex items-center bg-gray-100 p-2 rounded-md justify-between w-full md:w-2/4">
+            <div className="flex items-center bg-gray-100 dark:bg-background dark:border-white border p-2 rounded-md justify-between w-full md:w-2/4">
                 <Button
                     variant="ghost"
                     size="icon"
@@ -31,7 +31,7 @@ export default function AddToCart({ product }: AddToCartProps) {
                     onClick={() => setQuantity(quantity - 1)}
                     className="rounded-full"
                 >
-                    <Icons.remove className="h-5 w-5 text-gray-600" aria-hidden="true" />
+                    <Icons.remove className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
                 </Button>
                 <span className="font-semibold"> {quantity} </span>
                 <Button
@@ -41,7 +41,7 @@ export default function AddToCart({ product }: AddToCartProps) {
                     onClick={() => setQuantity(quantity + 1)}
                     className="rounded-full"
                 >
-                    <Icons.add className="h-5 w-5 text-gray-600" aria-hidden="true" />
+                    <Icons.add className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
                 </Button>
             </div>
             <Button

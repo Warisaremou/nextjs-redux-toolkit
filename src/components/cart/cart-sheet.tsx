@@ -30,7 +30,7 @@ export function CartSheet() {
             <SheetTrigger asChild>
                 <Button aria-label="Open cart" variant="outline" size="icon" className="relative">
                     {cart.cart.length > 0 && (
-                        <Badge className="absolute -right-2 -top-2 h-5 w-5 rounded-full pl-[6px] font-bold bg-blue-800">
+                        <Badge className="absolute -right-2 -top-2 h-5 w-5 rounded-full pl-[6px] font-bold bg-blue-800 dark:text-white">
                             {cart.cart.length}
                         </Badge>
                     )}
@@ -66,7 +66,7 @@ export function CartSheet() {
                                             </div>
                                             <div>
                                                 <h2 className="font-semibold"> {item?.productDetails?.title} </h2>
-                                                <div className="font-medium text-gray-600">
+                                                <div className="font-medium text-gray-600 dark:text-white">
                                                     {formatPrice(item?.productDetails?.variants?.edges[0]?.node?.price?.amount)} x{" "}
                                                     {item?.quantity} ={" "}
                                                     {formatPrice(
@@ -75,7 +75,7 @@ export function CartSheet() {
                                                     )}
                                                 </div>
                                                 <div className="flex gap-x-5 mt-2">
-                                                    <div className="flex items-center bg-gray-50 border px-2 rounded-md justify-between w-full space-x-2">
+                                                    <div className="flex items-center bg-gray-50 dark:bg-background dark:border-white border px-2 rounded-md justify-between w-full space-x-2">
                                                         <Button
                                                             variant="ghost"
                                                             size="icon"
@@ -83,10 +83,11 @@ export function CartSheet() {
                                                             onClick={() => {
                                                                 dispatch(removeFromCart(item?.productDetails));
                                                             }}
+                                                            className="dark:hover:bg-background"
                                                         >
-                                                            <Icons.remove className="h-5 w-5 text-gray-600" aria-hidden="true" />
+                                                            <Icons.remove className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
                                                         </Button>
-                                                        <span className="font-semibold">{item?.quantity}</span>
+                                                        <span className="font-semibold dark:text-white">{item?.quantity}</span>
                                                         <Button
                                                             variant="ghost"
                                                             size="icon"
@@ -94,8 +95,9 @@ export function CartSheet() {
                                                             onClick={() => {
                                                                 dispatch(addToCart({ product: item?.productDetails }));
                                                             }}
+                                                            className="dark:hover:bg-background"
                                                         >
-                                                            <Icons.add className="h-5 w-5 text-gray-600" aria-hidden="true" />
+                                                            <Icons.add className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
                                                         </Button>
                                                     </div>
                                                     <Button
@@ -105,9 +107,9 @@ export function CartSheet() {
                                                         onClick={() => {
                                                             dispatch(clearFromCart(item?.productDetails));
                                                         }}
-                                                        className="rounded-lg border px-[10px]"
+                                                        className="rounded-lg border px-[10px] dark:border-white"
                                                     >
-                                                        <Icons.trash className="h-5 w-5 text-gray-600" aria-hidden="true" />
+                                                        <Icons.trash className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
                                                     </Button>
                                                 </div>
                                             </div>
@@ -121,9 +123,9 @@ export function CartSheet() {
                             <div>
                                 <div className="flex py-3">
                                     <span className="flex-1 font-medium text-blue-900">Subtotal</span>
-                                    <span className="font-medium"> {formatPrice(cartTotal)} </span>
+                                    <span className="font-medium dark:text-white"> {formatPrice(cartTotal)} </span>
                                 </div>
-                                <p className="text-gray-600 text-[14px] md:text-base">
+                                <p className="text-gray-600 text-[14px] md:text-base dark:text-white">
                                     Shipping and taxes will be calculated at checkout.
                                 </p>
                             </div>
@@ -141,7 +143,7 @@ export function CartSheet() {
                                 <Button
                                     aria-label="Clear cart"
                                     size="sm"
-                                    className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 font-semibold"
+                                    className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 dark:text-white dark:hover:bg-blue-800 font-semibold"
                                     onClick={() => {
                                         router.push("/cart");
                                     }}

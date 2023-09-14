@@ -32,9 +32,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
     return (
         <div>
-            <Link href="/products" className="flex items-center space-x-1 pb-5">
-                <ChevronLeft className="h-4 w-4 text-gray-600" />
-                <span className=" font-medium text-gray-600">Back to store</span>
+            <Link href="/products" className="flex items-center space-x-1 pb-5 text-gray-600 dark:text-foreground">
+                <ChevronLeft className="h-4 w-4" />
+                <span className=" font-medium">Back to store</span>
             </Link>
 
             {isLoading && (

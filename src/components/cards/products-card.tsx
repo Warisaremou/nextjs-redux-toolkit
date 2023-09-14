@@ -31,7 +31,7 @@ export default function ProductsCard({ product }: ProductsCardProps) {
     };
 
     return (
-        <div className="border rounded-2xl">
+        <div className="border rounded-2xl ">
             <div className="overflow-hidden w-full h-fit bg-gray-50 rounded-t-2xl">
                 <div onClick={() => handleProductId(product?.node?.id)} className="cursor-pointer">
                     <Image
@@ -46,10 +46,10 @@ export default function ProductsCard({ product }: ProductsCardProps) {
             </div>
             <div className="p-3 space-y-3">
                 <div className="font-semibold">
-                    <h1 className="text-xl text-gray-700 pb-1"> {product?.node?.title} </h1>
+                    <h1 className="text-xl text-gray-700 pb-1 dark:text-white"> {product?.node?.title} </h1>
                     <div className="flex space-x-4 items-center">
-                        <h3 className="text-gray-600">{formatPrice(product?.node?.variants?.edges[0]?.node?.price?.amount)}</h3>
-                        <h3 className="text-gray-800">{product?.node?.variants?.edges[0]?.node?.price?.currencyCode}</h3>
+                        <h3 className="text-gray-600 dark:text-white">{formatPrice(product?.node?.variants?.edges[0]?.node?.price?.amount)}</h3>
+                        <h3 className="text-gray-800 dark:text-white">{product?.node?.variants?.edges[0]?.node?.price?.currencyCode}</h3>
                     </div>
                 </div>
                 <Button

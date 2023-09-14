@@ -75,7 +75,7 @@
     }
     /* Hero Section */
     .hero-section {
-        @apply bg-hero-background flex flex-col justify-center bg-center bg-cover rounded-3xl md:min-h-[45vh] p-4 md:p-10 lg:py-14 lg:px-20 relative w-full z-10 text-white;
+        @apply bg-hero-background flex flex-col justify-center bg-center bg-cover rounded-3xl md:min-h-[45vh] px-2 py-4 md:p-10 lg:py-14 lg:px-20 relative w-full z-10;
     }
     .overlay {
         @apply absolute inset-0 h-full w-full bg-gray-900 bg-opacity-90 rounded-[25px] opacity-50 -z-10;
