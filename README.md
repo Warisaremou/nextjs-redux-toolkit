@@ -5,6 +5,7 @@ This starter kit combines the power of Next.js for server-side rendering and rou
 ## Features
 
 -   Responsive
+-   Light/dark mode toggle
 -   Redux Toolkit
 -   React Query
 -   Axios
