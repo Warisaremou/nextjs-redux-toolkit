@@ -2,7 +2,7 @@
 
 import { Icons } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -13,6 +13,7 @@ import { addToCart, clearCart, clearFromCart, removeFromCart } from "@/features/
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import Link from "next/link";
 
 export function CartSheet() {
     const cart = useSelector((state: RootState) => state.cart.cart);
@@ -85,7 +86,10 @@ export function CartSheet() {
                                                             }}
                                                             className="dark:hover:bg-background"
                                                         >
-                                                            <Icons.remove className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
+                                                            <Icons.remove
+                                                                className="h-5 w-5 text-gray-600 dark:text-white"
+                                                                aria-hidden="true"
+                                                            />
                                                         </Button>
                                                         <span className="font-semibold dark:text-white">{item?.quantity}</span>
                                                         <Button
@@ -97,7 +101,10 @@ export function CartSheet() {
                                                             }}
                                                             className="dark:hover:bg-background"
                                                         >
-                                                            <Icons.add className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
+                                                            <Icons.add
+                                                                className="h-5 w-5 text-gray-600 dark:text-white"
+                                                                aria-hidden="true"
+                                                            />
                                                         </Button>
                                                     </div>
                                                     <Button
@@ -109,7 +116,10 @@ export function CartSheet() {
                                                         }}
                                                         className="rounded-lg border px-[10px] dark:border-white"
                                                     >
-                                                        <Icons.trash className="h-5 w-5 text-gray-600 dark:text-white" aria-hidden="true" />
+                                                        <Icons.trash
+                                                            className="h-5 w-5 text-gray-600 dark:text-white"
+                                                            aria-hidden="true"
+                                                        />
                                                     </Button>
                                                 </div>
                                             </div>
@@ -130,26 +140,30 @@ export function CartSheet() {
                                 </p>
                             </div>
                             <SheetFooter className="pt-8 gap-3">
-                                <Button
-                                    aria-label="Clear cart"
-                                    size="sm"
-                                    className="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold"
-                                    onClick={() => {
-                                        dispatch(clearCart());
-                                    }}
-                                >
-                                    Clear Cart
-                                </Button>
-                                <Button
-                                    aria-label="Clear cart"
-                                    size="sm"
-                                    className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 dark:text-white dark:hover:bg-blue-800 font-semibold"
-                                    onClick={() => {
-                                        router.push("/cart");
-                                    }}
-                                >
-                                    Go to checkout
-                                </Button>
+                                <SheetTrigger asChild>
+                                    <Button
+                                        aria-label="Clear cart"
+                                        size="sm"
+                                        className="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold"
+                                        onClick={() => {
+                                            dispatch(clearCart());
+                                        }}
+                                    >
+                                        Clear Cart
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetTrigger asChild>
+                                    <Button
+                                        aria-label="Clear cart"
+                                        size="sm"
+                                        className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 dark:text-white dark:hover:bg-blue-800 font-semibold"
+                                        onClick={() => {
+                                            router.push("/cart");
+                                        }}
+                                    >
+                                        Go to checkout
+                                    </Button>
+                                </SheetTrigger>
                             </SheetFooter>
                         </div>
                     </>
