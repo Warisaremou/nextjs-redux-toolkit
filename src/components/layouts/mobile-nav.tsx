@@ -69,8 +69,10 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
                                         </AccordionContent>
                                     </AccordionItem>
                                 ) : (
-                                    <div className=" text-sm py-4 border-b-[1px]" key={index}>
-                                        <Link href={String(item.href)}>{item.title}</Link>
+                                    <div className="text-sm py-4 border-b-[1px]" key={index}>
+                                        <SheetTrigger asChild>
+                                            <Link href={String(item.href)}>{item.title}</Link>
+                                        </SheetTrigger>
                                     </div>
                                 )
                             )}
