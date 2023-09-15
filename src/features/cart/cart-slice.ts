@@ -1,9 +1,6 @@
-// import { Product } from "./cart-slice";
 import { ProductType } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-// Here I want to define products state type and initial state
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface Product {
     productDetails: ProductType;
@@ -22,7 +19,6 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        // For add to cart reducer add optional payload for quantity if quantity is not pass use 1 as default else use payload quantity
         addToCart: (state, action: PayloadAction<{ product: ProductType; quantity?: number }>) => {
             const { product, quantity } = action.payload;
             const existingProduct = state.cart.find((item) => item.productDetails.id === product.id);

@@ -7,8 +7,7 @@ import { Icons } from "./icons";
 
 export default function Products() {
     const { data, isError, isSuccess, isLoading } = useProducts();
-    // isSuccess && console.log(data.data);
-
+    
     return (
         <div className="py-10">
             {isLoading && (

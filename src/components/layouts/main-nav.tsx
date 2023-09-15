@@ -1,9 +1,5 @@
 "use client";
 
-import type { MainNavItem } from "@/types";
-import Link from "next/link";
-import * as React from "react";
-
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -15,6 +11,9 @@ import {
 } from "@/components/ui/navigation-menu";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import type { MainNavItem } from "@/types";
+import Link from "next/link";
+import * as React from "react";
 
 interface MainNavProps {
     items?: MainNavItem[];

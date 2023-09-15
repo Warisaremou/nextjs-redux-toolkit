@@ -53,6 +53,7 @@ export default function ProductsCard({ product }: ProductsCardProps) {
                     </div>
                 </div>
                 <Button
+                    aria-label="Add product to cart"
                     className="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold"
                     disabled={isPending}
                     onClick={() => {

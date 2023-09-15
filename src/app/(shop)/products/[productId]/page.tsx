@@ -9,26 +9,16 @@ import { formatPrice } from "@/utils";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
-import React from "react";
 
-interface ProductDetailPageProps {
-    params: {
-        productId: string;
-    };
-}
+// interface ProductDetailPageProps {
+//     params: {
+//         productId: string;
+//     };
+// }
 
-export default function ProductDetailPage({ params }: ProductDetailPageProps) {
+export default function ProductDetailPage() {
     const { productId } = useProductIdProvider();
     const { data, isLoading, isSuccess } = useProduct(productId);
-    // const router = useRouter();
-
-    // React.useEffect(() => {
-    //     isError && router.push("/products");
-    //     isError && console.log("Something went wrong !");
-    // }, []);
-    // console.log(productId);
-    // isSuccess && console.log(data?.data?.product);
 
     return (
         <div>

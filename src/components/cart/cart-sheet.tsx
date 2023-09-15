@@ -2,18 +2,17 @@
 
 import { Icons } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { formatPrice } from "@/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 // Redux packages
 import { addToCart, clearCart, clearFromCart, removeFromCart } from "@/features/cart/cart-slice";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import Link from "next/link";
 
 export function CartSheet() {
     const cart = useSelector((state: RootState) => state.cart.cart);
@@ -22,7 +21,7 @@ export function CartSheet() {
     // console.log(cart.cart);
 
     // Cart Total
-    const cartTotal = cart.cart.reduce((total, item) => {
+    const cartTotal = cart.reduce((total, item) => {
         return total + Number(item?.productDetails?.variants?.edges[0]?.node?.price?.amount) * Number(item?.quantity);
     }, 0);
 
@@ -30,9 +29,9 @@ export function CartSheet() {
         <Sheet>
             <SheetTrigger asChild>
                 <Button aria-label="Open cart" variant="outline" size="icon" className="relative">
-                    {cart.cart.length > 0 && (
+                    {cart.length > 0 && (
                         <Badge className="absolute -right-2 -top-2 h-5 w-5 rounded-full pl-[6px] font-bold bg-blue-800 dark:text-white">
-                            {cart.cart.length}
+                            {cart.length}
                         </Badge>
                     )}
                     <Icons.cart className="h-4 w-4" aria-hidden="true" />
@@ -42,16 +41,16 @@ export function CartSheet() {
                 <SheetHeader className="px-1">
                     <SheetTitle>
                         Cart
-                        {cart.cart.length > 0 && `(${cart.cart.length})`}
+                        {cart.length > 0 && `(${cart.length})`}
                     </SheetTitle>
                 </SheetHeader>
                 <Separator />
-                {cart.cart.length > 0 ? (
+                {cart.length > 0 ? (
                     <>
                         <div className="flex flex-1 flex-col gap-5 overflow-hidden">
                             <ScrollArea className="h-full">
                                 <div className="flex flex-col gap-y-5 mr-6">
-                                    {cart.cart.map((item) => (
+                                    {cart.map((item) => (
                                         <div
                                             className="flex space-x-3 md:space-x-5 border-b-[1px] pb-5"
                                             key={`${item?.productDetails?.id}`}
@@ -79,8 +78,8 @@ export function CartSheet() {
                                                     <div className="flex items-center bg-gray-50 dark:bg-background dark:border-white border px-2 rounded-md justify-between w-full space-x-2">
                                                         <Button
                                                             variant="ghost"
+                                                            aria-label="Remove from cart"
                                                             size="icon"
-                                                            // disabled={quantity <= 1 && true}
                                                             onClick={() => {
                                                                 dispatch(removeFromCart(item?.productDetails));
                                                             }}
@@ -94,8 +93,8 @@ export function CartSheet() {
                                                         <span className="font-semibold dark:text-white">{item?.quantity}</span>
                                                         <Button
                                                             variant="ghost"
+                                                            aria-label="Add to cart"
                                                             size="icon"
-                                                            // disabled={quantity === 10 && true}
                                                             onClick={() => {
                                                                 dispatch(addToCart({ product: item?.productDetails }));
                                                             }}
@@ -109,8 +108,8 @@ export function CartSheet() {
                                                     </div>
                                                     <Button
                                                         variant="ghost"
+                                                        aria-label="Clear from cart"
                                                         size="icon"
-                                                        // disabled={quantity <= 1 && true}
                                                         onClick={() => {
                                                             dispatch(clearFromCart(item?.productDetails));
                                                         }}
@@ -154,14 +153,14 @@ export function CartSheet() {
                                 </SheetTrigger>
                                 <SheetTrigger asChild>
                                     <Button
-                                        aria-label="Clear cart"
+                                        aria-label="Continue to checkout"
                                         size="sm"
                                         className="w-full border bg-muted border-blue-800 hover:bg-blue-200 text-blue-800 dark:text-white dark:hover:bg-blue-800 font-semibold"
                                         onClick={() => {
                                             router.push("/cart");
                                         }}
                                     >
-                                        Go to checkout
+                                        Continue to checkout
                                     </Button>
                                 </SheetTrigger>
                             </SheetFooter>

@@ -2,11 +2,6 @@
 
 import React, { createContext } from "react";
 
-// type ProductIdContextType = {
-//     productId: string;
-//     setProductId: React.Dispatch<React.SetStateAction<string>>;
-// };
-
 const ProductIdContext = createContext({
     productId: "",
     setProductId: (value: string) => {},

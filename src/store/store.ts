@@ -8,7 +8,7 @@ const persistConfig = {
     key: "root",
     version: 1,
     storage,
-}
+};
 
 const reducer = combineReducers({
     cart: cartReducer,
@@ -17,9 +17,7 @@ const reducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-    reducer: {
-        cart: persistedReducer,
-    },
+    reducer: persistedReducer,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
