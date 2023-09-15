@@ -19,7 +19,7 @@ export function Hero() {
             />
             <div className="py-4 text-center md:mt-4">
                 <div className="flex items-center justify-center gap-x-3">
-                    <h3 className="font-semibold text-white md:text-xl">Explore our products</h3>
+                    <h1 className="font-medium text-white md:text-lg">Explore our products</h1>
                     <div onClick={() => router.push("/products")}>
                         <Button variant="outline" size="icon" aria-label="Go to products" className="dark:bg-white dark:border-white">
                             <ChevronRight className="w-5 h-5 text-gray-600 " />
