@@ -12,14 +12,14 @@ export function Hero() {
         <div className="hero-section">
             <div className="overlay" />
             <Header
-                className="place-items-center text-center text-white"
+                className="text-center text-white place-items-center"
                 title="Welcome to our store"
                 description="We sell the best T-shirt, Shoes, ..."
                 size="sm"
             />
             <div className="py-4 text-center md:mt-4">
                 <div className="flex items-center justify-center gap-x-3">
-                    <h3 className="font-semibold text-white md:text-xl">Visit our store</h3>
+                    <h3 className="font-semibold text-white md:text-xl">Explore our products</h3>
                     <div onClick={() => router.push("/products")}>
                         <Button variant="outline" size="icon" aria-label="Go to products" className="dark:bg-white dark:border-white">
                             <ChevronRight className="w-5 h-5 text-gray-600 " />

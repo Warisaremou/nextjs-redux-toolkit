@@ -24,6 +24,7 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
                 <Button
+                    aria-label="Toggle Menu"
                     variant="ghost"
                     className="border px-2 text-base text-secondary-foreground hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
                 >
@@ -33,7 +34,7 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
             </SheetTrigger>
             <SheetContent side="left" className="pl-0 pr-0 lg:hidden">
                 <div className="px-7">
-                    <Link aria-label="Home" href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
+                    <Link aria-label="Shop" href="/" className="flex items-center" onClick={() => setIsOpen(false)}>
                         <div className="font-bold inline-block text-xl text-gray-700 dark:text-white">
                             <span className="text-blue-800">S</span>hop.
                         </div>
@@ -71,7 +72,9 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
                                 ) : (
                                     <div className="text-sm py-4 border-b-[1px]" key={index}>
                                         <SheetTrigger asChild>
-                                            <Link href={String(item.href)}>{item.title}</Link>
+                                                <Link
+                                                    aria-label={item.title}
+                                                    href={String(item.href)}>{item.title}</Link>
                                         </SheetTrigger>
                                     </div>
                                 )
@@ -95,6 +98,7 @@ interface MobileLinkProps {
 function MobileLink({ children, href, disabled, pathname, setIsOpen }: MobileLinkProps) {
     return (
         <Link
+            aria-label={pathname}
             href={href}
             className={cn(
                 "text-foreground/70 transition-colors hover:text-foreground",

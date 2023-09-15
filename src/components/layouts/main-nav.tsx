@@ -22,7 +22,7 @@ interface MainNavProps {
 export function MainNav({ items }: MainNavProps) {
     return (
         <div className="hidden lg:flex gap-x-6 md:gap-44">
-            <Link aria-label="Home" href="/" className="items-center md:space-x-2 hidden lg:flex">
+            <Link aria-label="Shop" href="/" className="items-center md:space-x-2 hidden lg:flex">
                 <div className="font-bold inline-block text-xl text-gray-800 dark:text-white"> <span className="text-blue-700">S</span>hop.</div>
             </Link>
             <NavigationMenu className="hidden lg:flex">
@@ -72,7 +72,9 @@ export function MainNav({ items }: MainNavProps) {
                             ) : (
                                 item.href && (
                                     <NavigationMenuItem key={item.title}>
-                                        <Link href={item.href} legacyBehavior passHref>
+                                            <Link
+                                                aria-label={item.title}
+                                                href={item.href} legacyBehavior passHref>
                                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "h-auto")}>
                                                 {item.title}
                                             </NavigationMenuLink>
@@ -93,6 +95,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
             <li>
                 <NavigationMenuLink asChild>
                     <a
+                        aria-label={title}
                         ref={ref}
                         className={cn(
                             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
