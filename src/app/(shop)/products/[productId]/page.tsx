@@ -10,11 +10,19 @@ import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-// interface ProductDetailPageProps {
-//     params: {
-//         productId: string;
-//     };
+interface ProductDetailPageProps {
+	params: {
+		productId: string;
+	};
+}
+
+// export async function generateMetadata({ params }: ProductDetailPageProps) {
+// 	return {
+// 		title: `Turn On - ${params.productId} Playlist`,
+// 		description: "A Music Player Web App",
+// 	};
 // }
+
 
 export default function ProductDetailPage() {
     const { productId } = useProductIdProvider();

@@ -16,7 +16,7 @@ const urbanist = Urbanist({
 
 export const metadata: Metadata = {
     title: "Shop.",
-    description: "Only shop",
+    description: "Online shop",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
