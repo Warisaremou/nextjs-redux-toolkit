@@ -20,8 +20,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 	const [collectionID, setCollectionId] = React.useState<string>("");
 	const [collections, setCollections] = React.useState<any[]>([]);
 
-	const { data, isError, isSuccess, isLoading } = useCollectionsFilters();
-	// isSuccess && console.log(data.data);
+	const { data, isSuccess } = useCollectionsFilters();
 	React.useEffect(() => {
 		if (isSuccess) {
 			setCollections(data.data);
@@ -30,7 +29,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 			setIsLoading(true);
 			getCollection(collectionID)
 				.then((res) => {
-					console.log(res.data.data.collection.products.edges);
+					// console.log(res.data.data.collection.products.edges);
 					setCollectionProducts(res.data.data.collection.products.edges);
 				})
 				.catch((error) => {
@@ -43,7 +42,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 	}, [isSuccess, data, collectionID]);
 
 	return (
-		<>
+		<div className="flex items-center space-x-4">
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<Button
@@ -70,7 +69,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 									onSelect={(currentValue) => {
 										setValue(currentValue === value ? "" : currentValue);
 										setOpen(false);
-										console.log(collection.node.id);
+										// console.log(collection.node.id);
 										setCollectionId(collection.node.id);
 										// useCollection(collection.node.id);
 									}}
@@ -88,6 +87,17 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 					</Command>
 				</PopoverContent>
 			</Popover>
-		</>
+			<Button
+				aria-label="Clear Filter"
+				className="bg-blue-800 hover:bg-blue-900 text-white font-semibold"
+				onClick={() => {
+					setCollectionId("");
+					setValue("");
+					setCollectionProducts([]);
+				}}
+			>
+				Clear Filter
+			</Button>
+		</div>
 	);
 }

@@ -12,10 +12,10 @@ export default function Products() {
 	const [loading, setIsLoading] = React.useState<boolean>(false);
 	const { data, isError, isSuccess, isLoading } = useProducts();
 
-	React.useEffect(() => {
-		console.log("Collection Products: =>", collectionsProducts);
-		collectionsProducts.length > 0 && console.log("Collection Products: =>", collectionsProducts[0]);
-	}, [collectionsProducts]);
+	// React.useEffect(() => {
+	// 	console.log("Collection Products: =>", collectionsProducts);
+	// 	collectionsProducts.length > 0 && console.log("Collection Products: =>", collectionsProducts[0]);
+	// }, [collectionsProducts]);
 
 	return (
 		<div className="space-y-10 mt-10">

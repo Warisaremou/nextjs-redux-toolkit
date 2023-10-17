@@ -7,14 +7,13 @@ import { useCollections } from "@/services/hooks/use-collections";
 
 export default function CollectionSection() {
 	const { data, isError, isSuccess, isLoading } = useCollections();
-	// isSuccess ? console.log(data.data) : console.log("Error while fetching collections");
 
 	return (
 		<div id="collections">
 			<div className="text-center space-y-1 mb-10">
-				<h1 className="text-4xl font-bold text-blue-800">Discover Our Collection</h1>
-				<p className="text-xl font-medium text-gray-500 dark:text-gray-300">
-					Find the best Clothes from store around the world
+				<h1 className="text-2xl md:text-4xl font-bold text-blue-800">Discover Our Collection</h1>
+				<p className="text-sm lg:text-xl font-medium text-gray-500 dark:text-gray-300">
+					Find the best Clothes from our store around the world
 				</p>
 			</div>
 			{isLoading && (
