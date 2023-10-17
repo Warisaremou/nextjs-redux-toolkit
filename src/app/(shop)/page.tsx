@@ -6,7 +6,9 @@ export default function HomePage() {
 	return (
 		<Shell>
 			<Hero />
-			<CollectionSection />
+			<div className="mt-10">
+				<CollectionSection />
+			</div>
 		</Shell>
 	);
 }

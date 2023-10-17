@@ -11,7 +11,7 @@ export default function CollectionSection() {
 	return (
 		<div id="collections">
 			<div className="text-center space-y-1 mb-10">
-				<h1 className="text-2xl md:text-4xl font-bold text-blue-800">Discover Our Collection</h1>
+				<h1 className="text-2xl md:text-4xl font-bold text-blue-800">Discover Our Collections</h1>
 				<p className="text-sm lg:text-xl font-medium text-gray-500 dark:text-gray-300">
 					Find the best Clothes from our store around the world
 				</p>
