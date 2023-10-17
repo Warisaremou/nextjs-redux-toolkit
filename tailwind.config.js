@@ -58,7 +58,7 @@ module.exports = {
                 },
             },
             backgroundImage: {
-                "hero-background": "url('/images/hero-section-bg.jpg')",
+                "hero-background": "url('/images/hero-section-bg.avif')",
             },
             borderRadius: {
                 lg: "var(--radius)",
