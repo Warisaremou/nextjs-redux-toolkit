@@ -33,7 +33,8 @@ export const cartSlice = createSlice({
         removeFromCart: (state, action: PayloadAction<ProductType>) => {
             const existingProduct = state.cart.find((product) => product.productDetails.id === action.payload.id);
             if (existingProduct && existingProduct.quantity === 1) {
-                state.cart = state.cart.filter((product) => product.productDetails.id !== action.payload.id);
+                return;
+                // state.cart = state.cart.filter((product) => product.productDetails.id !== action.payload.id);
             } else if (existingProduct) {
                 existingProduct.quantity--;
             }
