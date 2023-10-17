@@ -7,8 +7,7 @@ import { useCollections } from "@/services/hooks/use-collections";
 
 export default function CollectionSection() {
 	const { data, isError, isSuccess, isLoading } = useCollections();
-
-	isSuccess ? console.log(data.data) : console.log("Error while fetching collections");
+	// isSuccess ? console.log(data.data) : console.log("Error while fetching collections");
 
 	return (
 		<div id="collections">

@@ -12,5 +12,3 @@ export const useProduct = (productId?: string) => {
         },
     });
 };
-
-// productId ==> gid://shopify/Product/7982905098262

@@ -8,7 +8,7 @@ type CollectionsCardType = {
 };
 
 export default function CollectionsCard({ className, collection }: CollectionsCardType) {
-	console.log(collection?.node);
+	// console.log(collection?.node);
 	return (
 		<Link href="/" aria-label="" className={`${className}`}>
 			<div className="overflow-hidden w-full h-full bg-gray-50 rounded-xl relative">

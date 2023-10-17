@@ -7,24 +7,40 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCollectionsFilters } from "@/services/hooks/use-collections-filter";
+import { getCollection } from "@/services/hooks/get-collection";
 
-export default function FilterCollections() {
-	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState("");
+interface FilterCollectionsProps {
+	setCollectionProducts: any;
+	setIsLoading: any;
+}
+
+export default function FilterCollections({ setCollectionProducts, setIsLoading }: FilterCollectionsProps) {
+	const [open, setOpen] = React.useState<boolean>(false);
+	const [value, setValue] = React.useState<string>("");
+	const [collectionID, setCollectionId] = React.useState<string>("");
 	const [collections, setCollections] = React.useState<any[]>([]);
 
 	const { data, isError, isSuccess, isLoading } = useCollectionsFilters();
 	// isSuccess && console.log(data.data);
-
 	React.useEffect(() => {
 		if (isSuccess) {
 			setCollections(data.data);
 		}
-	}, [isSuccess]);
-
-	// isSuccess && console.log(collections[0].node.title);
-
-	// fill this array with the collections from the api
+		if (collectionID !== "") {
+			setIsLoading(true);
+			getCollection(collectionID)
+				.then((res) => {
+					console.log(res.data.data.collection.products.edges);
+					setCollectionProducts(res.data.data.collection.products.edges);
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+				.finally(() => {
+					setIsLoading(false);
+				});
+		}
+	}, [isSuccess, collectionID]);
 
 	return (
 		<>
@@ -54,12 +70,15 @@ export default function FilterCollections() {
 									onSelect={(currentValue) => {
 										setValue(currentValue === value ? "" : currentValue);
 										setOpen(false);
+										console.log(collection.node.id);
+										setCollectionId(collection.node.id);
+										// useCollection(collection.node.id);
 									}}
 								>
 									<Check
 										className={cn(
 											"mr-2 h-4 w-4",
-											value === collection.value ? "opacity-100" : "opacity-0"
+											value === collection.node.handle ? "opacity-100" : "opacity-0"
 										)}
 									/>
 									{collection.node.title}
