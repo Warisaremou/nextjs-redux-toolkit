@@ -40,7 +40,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 					setIsLoading(false);
 				});
 		}
-	}, [isSuccess, collectionID]);
+	}, [isSuccess, data, collectionID]);
 
 	return (
 		<>
