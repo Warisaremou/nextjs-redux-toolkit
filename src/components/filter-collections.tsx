@@ -8,6 +8,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCollectionsFilters } from "@/services/hooks/use-collections-filter";
 import { getCollection } from "@/services/hooks/get-collection";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface FilterCollectionsProps {
 	setCollectionProducts: any;
@@ -19,9 +21,49 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 	const [value, setValue] = React.useState<string>("");
 	const [collectionID, setCollectionId] = React.useState<string>("");
 	const [collections, setCollections] = React.useState<any[]>([]);
+	const [clearFilter, setClearFilter] = React.useState<boolean>(false);
+
+	const pathname = usePathname();
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const collection_range = searchParams.get("collection") ?? "";
+	const params = new URLSearchParams(searchParams?.toString());
 
 	const { data, isSuccess } = useCollectionsFilters();
 	React.useEffect(() => {
+		//Update the URL with the collection name
+		// console.log("collection_range =>", collection_range);
+		// ** Function to fetch the collection data by collection name
+		async function fecthCollection(collection: string) {
+			const collection_id = await data?.data.find(
+				(collectionData: any) => collectionData.node.handle === collection
+			)?.node.id;
+			// console.log("collection_id =>", collection_id);
+			setCollectionId(collection_id);
+		}
+
+		if (value !== "") {
+			// console.log("value =>", value);
+			params.set("collection", value);
+		} else {
+			params.delete("collection");
+		}
+		// else {
+		// 	// console.log("value is null");
+		// 	collection_range == ""
+		// 		? console.log("collection_range is null")
+		// 		: console.log("collection_range =>", collection_range);
+		// }
+		if (collection_range !== "") {
+			setValue(collection_range);
+			params.set("collection", value);
+			fecthCollection(collection_range);
+		} else {
+			params.delete("collection");
+		}
+
+		router.replace(`${pathname}?${params.toString()}`);
+
 		if (isSuccess) {
 			setCollections(data.data);
 		}
@@ -39,7 +81,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 					setIsLoading(false);
 				});
 		}
-	}, [isSuccess, data, collectionID]);
+	}, [isSuccess, data, collectionID, value, collection_range]);
 
 	return (
 		<div className="flex items-center space-x-4">
@@ -49,11 +91,10 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 						variant="outline"
 						role="combobox"
 						aria-expanded={open}
-						className="w-[200px] justify-between"
+						className="w-[200px] md:w-[220px] justify-between"
 					>
 						{value
-							? collections.find((collection: any) => collection.node.handle === value)?.node
-									.title
+							? collections.find((collection: any) => collection.node.handle === value)?.node.title
 							: "Filter By Collection..."}
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 					</Button>
@@ -67,11 +108,10 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 								<CommandItem
 									key={collection.node.title}
 									onSelect={(currentValue) => {
-										setValue(currentValue === value ? "" : currentValue);
+										// console.log("currentValue =>", currentValue);
+										setValue(currentValue === value ? value : currentValue);
 										setOpen(false);
-										// console.log(collection.node.id);
 										setCollectionId(collection.node.id);
-										// useCollection(collection.node.id);
 									}}
 								>
 									<Check
@@ -91,9 +131,11 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 				aria-label="Clear Filter"
 				className="bg-blue-800 hover:bg-blue-900 text-white font-semibold"
 				onClick={() => {
-					setCollectionId("");
 					setValue("");
+					setCollectionId("");
 					setCollectionProducts([]);
+					setClearFilter(true);
+					router.push(`${pathname}?`);
 				}}
 			>
 				Clear Filter

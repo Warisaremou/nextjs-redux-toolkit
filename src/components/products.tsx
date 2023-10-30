@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { useProducts } from "@/services/hooks/use-products";
+import * as React from "react";
 import ProductsCard from "./cards/products-card";
 import FilterCollections from "./filter-collections";
 import { Icons } from "./icons";
@@ -28,10 +28,7 @@ export default function Products() {
 						{Array.from({ length: 8 }).map((_, i) => (
 							<div key={i} className="bg-gray-200 rounded-2xl border-2">
 								<Skeleton className="overflow-hidden w-full h-56 md:h-48 lg:h-72 bg-gray-50 flex justify-center items-center">
-									<Icons.placeholder
-										className="h-16 w-16 text-gray-400"
-										aria-hidden="true"
-									/>
+									<Icons.placeholder className="h-16 w-16 text-gray-400" aria-hidden="true" />
 								</Skeleton>
 
 								<div className="p-3 space-y-3">
