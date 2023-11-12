@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							<ProductIdContextProvider>
 								<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 									{children}
-									<Analytics />
+									{/* <Analytics /> */}
 									<TailwindIndicator />
 									<Toaster />
 								</ThemeProvider>

@@ -1,13 +1,14 @@
 "use client";
 
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useCollectionsFilters } from "@/services/hooks/use-collections-filter";
+import { cn } from "@/lib/utils";
 import { getCollection } from "@/services/hooks/get-collection";
+import { useCollectionsFilters } from "@/services/hooks/use-collections-filter";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import * as React from "react";
 
 interface FilterCollectionsProps {
 	setCollectionProducts: any;
@@ -20,16 +21,35 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 	const [collectionID, setCollectionId] = React.useState<string>("");
 	const [collections, setCollections] = React.useState<any[]>([]);
 
+	const pathname = usePathname();
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const collection_range = searchParams.get("collection") ?? "";
+	const params = new URLSearchParams(searchParams);
+
 	const { data, isSuccess } = useCollectionsFilters();
+
 	React.useEffect(() => {
 		if (isSuccess) {
 			setCollections(data.data);
 		}
-		if (collectionID !== "") {
+
+		// ** Function to get collection ID by his name
+		async function getCollectionID(collection_name: string) {
+			const id: string = await data?.data.find(
+				(collectionData: any) => collectionData.node.handle === collection_name
+			)?.node.id;
+
+			if (id) {
+				setCollectionId(id);
+			}
+		}
+
+		// ** Function to fetch collection products by collectionID
+		async function getCollectionProducts(collection_id: string) {
 			setIsLoading(true);
-			getCollection(collectionID)
+			await getCollection(collection_id)
 				.then((res) => {
-					// console.log(res.data.data.collection.products.edges);
 					setCollectionProducts(res.data.data.collection.products.edges);
 				})
 				.catch((error) => {
@@ -39,7 +59,22 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 					setIsLoading(false);
 				});
 		}
-	}, [isSuccess, data, collectionID]);
+
+		if (collection_range !== "") {
+			setValue(collection_range);
+			getCollectionID(collection_range);
+			getCollectionProducts(collectionID);
+		} else {
+			if (collectionID) {
+				params.set("collection", value);
+				router.replace(`${pathname}?${params.toString()}`);
+				getCollectionProducts(collectionID);
+			} else {
+				params.delete("collection");
+			}
+			router.replace(`${pathname}?${params.toString()}`);
+		}
+	}, [isSuccess, data, collectionID, value]);
 
 	return (
 		<div className="flex items-center space-x-4">
@@ -52,8 +87,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 						className="w-[200px] justify-between"
 					>
 						{value
-							? collections.find((collection: any) => collection.node.handle === value)?.node
-									.title
+							? collections.find((collection: any) => collection.node.handle === value)?.node.title
 							: "Filter By Collection..."}
 						<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 					</Button>
@@ -69,9 +103,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 									onSelect={(currentValue) => {
 										setValue(currentValue === value ? "" : currentValue);
 										setOpen(false);
-										// console.log(collection.node.id);
 										setCollectionId(collection.node.id);
-										// useCollection(collection.node.id);
 									}}
 								>
 									<Check
@@ -94,6 +126,7 @@ export default function FilterCollections({ setCollectionProducts, setIsLoading 
 					setCollectionId("");
 					setValue("");
 					setCollectionProducts([]);
+					router.replace(`${pathname}`);
 				}}
 			>
 				Clear Filter
