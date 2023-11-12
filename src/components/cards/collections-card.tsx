@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 type CollectionsCardType = {
 	collection: any;
@@ -10,7 +9,11 @@ type CollectionsCardType = {
 export default function CollectionsCard({ className, collection }: CollectionsCardType) {
 	// console.log(collection?.node);
 	return (
-		<Link href="/" aria-label="" className={`${className}`}>
+		<Link
+			href={`/products?collection=${collection?.node?.title.toLowerCase()}`}
+			aria-label={`View ${collection?.node?.title} collection`}
+			className={`${className}`}
+		>
 			<div className="overflow-hidden w-full h-full bg-gray-50 rounded-xl relative">
 				<div className="absolute inset-0 z-10 bg-zinc-800/50" />
 				<Image
