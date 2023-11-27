@@ -10,7 +10,7 @@ type CollectionsCardType = {
 export default function CollectionsCard({ className, collection }: CollectionsCardType) {
 	// console.log(collection?.node);
 	return (
-		<Link href="/" aria-label="" className={`${className}`}>
+		<Link href="/products" aria-label="" className={`${className}`}>
 			<div className="overflow-hidden w-full h-full bg-gray-50 rounded-xl relative">
 				<div className="absolute inset-0 z-10 bg-zinc-800/50" />
 				<Image
