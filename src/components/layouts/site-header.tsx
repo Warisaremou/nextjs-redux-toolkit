@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 export function SiteHeader() {
     const router = useRouter();
     return (
-        <header className="sticky top-0 z-40 w-full border-b bg-background">
+        <header className="sticky top-0 z-50 w-full border-b bg-background">
             <div className="container flex items-center h-16">
                 <MobileNav mainNavItems={siteConfig.mainNav} />
                 <MainNav items={siteConfig.mainNav} />
