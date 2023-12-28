@@ -21,7 +21,7 @@ export default function CollectionsCard({ className, collection }: CollectionsCa
 					height={300}
 					className="scale-100 hover:scale-110 ease-linear duration-100 object-cover h-full w-full"
 				/>
-				<h1 className="z-40 text-white font-semibold text-4xl lg:text-[45px] top-1/2 absolute w-full flex justify-center">
+				<h1 className="z-20 text-white font-semibold text-4xl lg:text-[45px] top-1/2 absolute w-full flex justify-center">
 					{collection?.node?.title}
 				</h1>
 			</div>
